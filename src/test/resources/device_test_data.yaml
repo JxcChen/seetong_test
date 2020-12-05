@@ -1,0 +1,88 @@
+caseModel:
+#  初始化
+  init:
+    steps:
+      - init: [mainPage,com.seetong.page.MainPage]
+      - mainPage.devicePage: []
+
+
+  quit:
+    steps:
+      - mainPage.quit: []
+
+
+#  添加设备
+  addDeviceSuccessTest:
+    data:
+#     param1 为第一个方法的参数  第二个方法的参数则定义成param2 以此往下
+      - {param1: ["12632062","1"],param2: "12632062",assertEquals1: "12632062 设备添加成功",assertTrue1: 12632062}
+      - {param1: ["12632062","1"],param2: "12632062",assertEquals1: "12632062 设备列表中已存在",assertTrue1: 12632062}
+
+    steps:
+#      这里的param1对应上面的参数  也是根据方法 第一个方法为param1 第二个方法为param2
+      - devicePage.addDeviceSuccess: [param1]
+      - devicePage.getAddDeviceSuccessResult: []
+      - assert: assertEquals1
+      - devicePage.searchAndGetResult: param2
+      - assert: assertTrue1
+
+
+  #  通过局域网添加设备
+  addDeviceThroughLanSuccessTest:
+    data:
+      - {param1: ["11083706","1"],param2: "11083706",assertTrue1: "11083706"}
+
+    steps:
+      - devicePage.addDeviceThroughLanSuccess: [param1]
+      - devicePage.searchAndGetResult: "param2"
+      - assert: assertTrue1
+
+
+#  添加设备失败 得到toast错误信息
+  addDeviceFailWithToastTipsTest:
+    data:
+      - {param1: ["12","1"],assertEquals1: "不合法的设备ID"}
+      - {param1: ["126","1"],assertEquals1: "不合法的设备ID"}
+
+    steps:
+      - devicePage.addDeviceFail: [param1]
+      - devicePage.getAddDeviceToastTips: []
+      - assert: assertEquals1
+
+
+#  添加设备失败得到错误弹框信息
+  addDeviceFailWithMessageTest:
+    data:
+      - {param1: ["126320","1"],assertTrue1: "帐号或密码错误"}
+      - {param1: ["1263206","1"],assertTrue1: "帐号或密码错误"}
+      - {param1: ["126320621","1"],assertTrue1: "未找到此设备"}
+      - {param1: ["12632061","1"],assertTrue1: "不支持此种方式添加设备"}
+
+    steps:
+      - devicePage.addDeviceFail: [param1]
+      - devicePage.getAddDeviceFailMessage: []
+      - assert: assertTrue1
+
+
+#  删除设备
+  deleteDeviceTest:
+    data:
+      - {param1: "12632062",param2: "12632062",assertFalse1: "12632062"}
+
+    steps:
+      - devicePage.deleteDevice: param1
+      - devicePage.searchAndGetResult: param2
+      - assert: assertFalse1
+
+
+#  搜索设备
+  searchDeviceTest:
+    data:
+      - {param1: "1",assertTrue1: "12632062"}
+      - {param1: "126",assertTrue1: "12632062"}
+      - {param1: "12632",assertTrue1: "12632062"}
+      - {param1: "12632062",assertTrue1: "12632062"}
+
+    steps:
+      - devicePage.searchAndGetResult: param1
+      - assert: assertTrue1
