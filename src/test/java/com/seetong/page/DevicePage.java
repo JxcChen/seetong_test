@@ -37,6 +37,23 @@ public class DevicePage extends BasePage {
 
 
 
+    /**
+     * 删除所有设备
+     * @return DevicePage
+     */
+    public DevicePage clearAllDevices(){
+        while(true) {
+            try {
+                List<WebElement> elements = driver.findElements(By.id("listview_item_setting_entry"));
+                elements.get(0).click();
+                clickElement(deleteDeviceBtn);
+                clickElement(deleteConfirmBtn);
+            } catch (Exception e) {
+                break;
+            }
+        }
+            return this;
+    }
 
 
     /**

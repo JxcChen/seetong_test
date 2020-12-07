@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Driver;
 import java.time.Duration;
 import java.util.*;
 
@@ -143,24 +144,85 @@ public class BasePage {
     public String getElementText(By locator){ return waitElementVisible(locator).getText(); }
 
     /**
-     * 向下滚动
+     * 滑动屏幕操作
+     * @param direction 滑动方向
      */
-    public void swipeDown(){
-        // 获取页面尺寸
+    public void swipe(String direction){
         int width = driver.manage().window().getSize().getWidth();
         int height = driver.manage().window().getSize().getHeight();
-        // 1.创建touchAction对象
         TouchAction touchAction = new TouchAction(driver);
-        // 2.创建Duration对象 单位为毫秒
         Duration duration = Duration.ofMillis(600);
+        if (direction.equals("down")){
+            swipeDown(width,height,touchAction,duration);
+        }else if(direction.equals("up")){
+            swipeUp(width,height,touchAction,duration);
+        }else if (direction.equals("right")){
+            swipeRight(width,height,touchAction,duration);
+        }else if (direction.equals("left")){
+            swipeLeft(width,height,touchAction,duration);
+        }else {
+            System.out.println("方向有误");
+        }
+    }
 
-        // 3.添加滑动操作
+    /**
+     * 向下滚动
+     */
+    public void swipeDown(int width,int height,TouchAction touchAction,Duration duration){
         touchAction
                 .press(PointOption.point(width/2,height/2)) // 按住开始坐标
                 .waitAction(WaitOptions.waitOptions(duration)) // 设置执行时长
-                .moveTo(PointOption.point(width/2,height/5)) //移动到达的位置
+                .moveTo(PointOption.point(width/2,height/6)) //移动到达的位置
                 .release() // 放开鼠标
                 .perform(); // 执行操作
+    }
+
+    /**
+     * 向上滚动
+     */
+    public void swipeUp(int width,int height,TouchAction touchAction,Duration duration){
+        touchAction
+                .press(PointOption.point(width/2,height/4)) // 按住开始坐标
+                .waitAction(WaitOptions.waitOptions(duration)) // 设置执行时长
+                .moveTo(PointOption.point(width/2,height/4*3)) //移动到达的位置
+                .release() // 放开鼠标
+                .perform(); // 执行操作
+    }
+
+    /**
+     * 向右滚动
+     */
+    public void swipeRight(int width,int height,TouchAction touchAction,Duration duration){
+        touchAction
+                .press(PointOption.point(width/2,height/2)) // 按住开始坐标
+                .waitAction(WaitOptions.waitOptions(duration)) // 设置执行时长
+                .moveTo(PointOption.point(width/6,height/2)) //移动到达的位置
+                .release() // 放开鼠标
+                .perform(); // 执行操作
+    }
+
+
+    /**
+     * 向左滚动
+     */
+    public void swipeLeft(int width,int height,TouchAction touchAction,Duration duration){
+        touchAction
+                .press(PointOption.point(width/4,height/2)) // 按住开始坐标
+                .waitAction(WaitOptions.waitOptions(duration)) // 设置执行时长
+                .moveTo(PointOption.point(width/4*3,height/2)) //移动到达的位置
+                .release() // 放开鼠标
+                .perform(); // 执行操作
+    }
+
+    /**
+     * 滑动到元素可见
+     * @param selector
+     */
+    public void swipeToTargetElement(String Textselector){
+        driver.findElementByAndroidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true).instance(0))" +
+                        ".scrollIntoView(new UiSelector().textMatches(\""+Textselector+"\").instance(0))")
+                .click();
     }
 
 

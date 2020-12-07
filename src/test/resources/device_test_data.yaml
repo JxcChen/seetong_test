@@ -4,6 +4,7 @@ caseModel:
     steps:
       - init: [mainPage,com.seetong.page.MainPage]
       - mainPage.devicePage: []
+      - devicePage.clearAllDevices: []
 
 
   quit:

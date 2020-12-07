@@ -25,6 +25,7 @@ public class DeviceTest {
             model = mapper.readValue(DeviceTest.class.getResourceAsStream("/device_test_data.yaml"), TestCaseModel.class);
             // 进行初始化
             TestCaseModel.getTestData(model).get(0).run();
+            // 清空所有设备
         } catch (IOException e) {
             e.printStackTrace();
         }

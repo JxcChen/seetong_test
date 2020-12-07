@@ -43,6 +43,10 @@ public class MainPage extends BasePage {
         return new DevicePage(driver);
     }
 
+
+    /**
+     * 结束退出驱动
+     */
     public void quit(){
         driver.closeApp();
     }
