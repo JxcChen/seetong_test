@@ -21,7 +21,7 @@ public class MainPage extends BasePage {
     public void initDriver(){
         try {
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("platForm","Android");
+            capabilities.setCapability("platformName","Android");
             capabilities.setCapability("deviceName","mate40");
             capabilities.setCapability("appPackage","com.seetong.app.seetong");
             capabilities.setCapability("appActivity",".ui.WelcomeActivity");
