@@ -2,6 +2,7 @@ package com.seetong.testcase.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.seetong.common.Constant;
 import com.seetong.testcase.testcase_object.BaseTestCase;
 import com.seetong.testcase.testcase_object.TestCaseModel;
 import org.junit.jupiter.api.*;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DeviceTest {
-
     static ObjectMapper mapper;
     static TestCaseModel model;
 
@@ -21,8 +21,9 @@ public class DeviceTest {
     public static void init() {
         try {
             // todo: 获取yaml数据并进行初始化
-            mapper = new ObjectMapper(new YAMLFactory()) {};
-            model = mapper.readValue(DeviceTest.class.getResourceAsStream("/device_test_data.yaml"), TestCaseModel.class);
+            mapper = new ObjectMapper(new YAMLFactory()) {
+            };
+            model = mapper.readValue(DeviceTest.class.getResourceAsStream(Constant.DEVICE_TEST_DATA_FILE_PATH), TestCaseModel.class);
             // 进行初始化
             TestCaseModel.getTestData(model).get(0).run();
             // 清空所有设备
@@ -31,6 +32,15 @@ public class DeviceTest {
         }
     }
 
+    @AfterAll
+    public static void quit() {
+        TestCaseModel.getTestData(model).get(0).run();
+    }
+
+    @BeforeEach
+    public void backToTestPage() {
+        TestCaseModel.getTestData(model).get(0).run();
+    }
 
 
     @ParameterizedTest
@@ -43,13 +53,6 @@ public class DeviceTest {
     @ParameterizedTest
     @MethodSource()
     @Order(2)
-    void addDeviceFailWithToastTipsTest(BaseTestCase testCase) {
-        testCase.run();
-    }
-
-    @ParameterizedTest
-    @MethodSource()
-    @Order(3)
     void addDeviceThroughLanSuccessTest(BaseTestCase testCase) {
         testCase.run();
     }
@@ -57,24 +60,31 @@ public class DeviceTest {
     @ParameterizedTest
     @MethodSource()
     @Order(3)
-    void addDeviceFailWithMessageTest(BaseTestCase testCase) {
+    @Disabled
+    void addDeviceFailWithToastTipsTest(BaseTestCase testCase) {
         testCase.run();
     }
 
     @ParameterizedTest
     @MethodSource()
     @Order(4)
-    void searchDeviceTest(BaseTestCase testCase) {
+    void addDeviceFailWithMessageTest(BaseTestCase testCase) {
         testCase.run();
     }
 
     @ParameterizedTest
     @MethodSource()
     @Order(5)
-    void deleteDeviceTest(BaseTestCase testCase) {
+    void searchDeviceTest(BaseTestCase testCase) {
         testCase.run();
     }
 
+    @ParameterizedTest
+    @MethodSource()
+    @Order(6)
+    void deleteDeviceTest(BaseTestCase testCase) {
+        testCase.run();
+    }
 
 
     public static List<BaseTestCase> addDeviceSuccessTest() {
@@ -101,10 +111,5 @@ public class DeviceTest {
         return TestCaseModel.getTestData(model);
     }
 
-
-    @AfterAll
-    public static void quit(){
-        TestCaseModel.getTestData(model).get(0).run();
-    }
 
 }

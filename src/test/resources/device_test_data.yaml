@@ -2,9 +2,14 @@ caseModel:
 #  初始化
   init:
     steps:
-      - init: [mainPage,com.seetong.page.MainPage]
+      - init: [mainPage,com.seetong.page.main.MainPage]
       - mainPage.devicePage: []
       - devicePage.clearAllDevices: []
+
+#
+  backToTestPage:
+    steps:
+      - devicePage.backToIndex: []
 
 
   quit:
@@ -17,7 +22,7 @@ caseModel:
     data:
 #     param1 为第一个方法的参数  第二个方法的参数则定义成param2 以此往下
       - {param1: ["12632062","1"],param2: "12632062",assertEquals1: "12632062 设备添加成功",assertTrue1: 12632062}
-      - {param1: ["12632062","1"],param2: "12632062",assertEquals1: "12632062 设备列表中已存在",assertTrue1: 12632062}
+      - {param1: ["12632062","1213213"],param2: "12632062",assertEquals1: "12632062 设备列表中已存在",assertTrue1: 12632062}
 
     steps:
 #      这里的param1对应上面的参数  也是根据方法 第一个方法为param1 第二个方法为param2
@@ -47,7 +52,7 @@ caseModel:
 
     steps:
       - devicePage.addDeviceFail: [param1]
-      - devicePage.getAddDeviceToastTips: []
+      - devicePage.getAddDeviceFailToastTips: []
       - assert: assertEquals1
 
 
