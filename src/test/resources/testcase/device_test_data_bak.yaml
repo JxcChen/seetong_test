@@ -1,20 +1,23 @@
 caseModel:
 #  初始化
   init:
+
     steps:
       - init: [mainPage,com.seetong.page.main.MainPage]
       - mainPage.devicePage: []
       - devicePage.clearAllDevices: []
 
-#
+
   backToTestPage:
+
     steps:
       - devicePage.backToIndex: []
 
 
   quit:
+
     steps:
-      - mainPage.quit: []
+      - mainPage.tearDown: []
 
 
 #  添加设备

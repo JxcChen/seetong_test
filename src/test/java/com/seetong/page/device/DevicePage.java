@@ -47,6 +47,7 @@ public class DevicePage extends BasePage {
      * @return DevicePage
      */
     public DevicePage clearAllDevices() {
+        logger.info("设备测试前置，清除所有设备");
         while (true) {
             try {
                 List<WebElement> elements = driver.findElements(By.id("listview_item_setting_entry"));
@@ -64,9 +65,10 @@ public class DevicePage extends BasePage {
      * 回退到设备测试首页
      */
     public void backToIndex() {
+        logger.info("设备测试用例前置，回退到设备测试首页");
         while (true) {
             try {
-                WebDriverWait driverWait = new WebDriverWait(driver, 2);
+                WebDriverWait driverWait = new WebDriverWait(driver, 1,20);
                 driverWait.until(ExpectedConditions.visibilityOfElementLocated(searchBtn));
                 break;
             } catch (Exception e) {
@@ -84,8 +86,10 @@ public class DevicePage extends BasePage {
      */
     public DevicePage addDeviceSuccess(String deviceId, String devicePassword) {
         try {
+            logger.info("正确添加"+deviceId+"设备测试");
             addNVRDevicePage.addDevice(deviceId, devicePassword);
         } catch (Exception e) {
+            logger.error("正确添加"+deviceId+"设备测试失败");
             backToIndex();
             e.printStackTrace();
         }
@@ -101,10 +105,12 @@ public class DevicePage extends BasePage {
      */
     public DevicePage addDeviceThroughLanSuccess(String deviceId, String devicePassword) {
         try {
+            logger.info("通过局域网添加"+deviceId+"设备");
             addNVRDevicePage.addDeviceThroughLan(deviceId, devicePassword);
             clickElement(iKnowBtn);
             clickElement(goBackBtn);
         } catch (Exception e) {
+            logger.error("通过局域网添加"+deviceId+"设备失败");
             backToIndex();
             e.printStackTrace();
         }
@@ -117,13 +123,16 @@ public class DevicePage extends BasePage {
      * @return 添加设备结果
      */
     public String getAddDeviceSuccessResult() {
+
         String addResult = "";
         try {
+            logger.info("获取成功添加设备结果信息");
             Thread.sleep(3000);
             addResult = getElementText(addDeviceResult);
             clickElement(iKnowBtn);
             clickElement(goBackBtn);
         } catch (InterruptedException e) {
+            logger.error("获取成功添加设备结果信息失败");
             backToIndex();
             e.printStackTrace();
         }
@@ -139,8 +148,10 @@ public class DevicePage extends BasePage {
      */
     public DevicePage addDeviceFail(String deviceId, String devicePassword) {
         try {
+            logger.info("错误添加"+deviceId+"设备");
             addNVRDevicePage.addDevice(deviceId, devicePassword);
         } catch (Exception e) {
+            logger.error("错误添加"+deviceId+"设备失败");
             backToIndex();
             e.printStackTrace();
         }
@@ -153,7 +164,15 @@ public class DevicePage extends BasePage {
      * @return FailToastTips
      */
     public String getAddDeviceFailToastTips() {
-        return addNVRDevicePage.getAddDeviceToastTips();
+        logger.info("获取错误添加设备的ToastTips");
+        String addDeviceToastTips = null;
+        try {
+            addDeviceToastTips = addNVRDevicePage.getAddDeviceToastTips();
+        } catch (Exception e) {
+            logger.error("获取错误添加设备的ToastTips失败");
+            e.printStackTrace();
+        }
+        return addDeviceToastTips;
     }
 
     /**
@@ -162,7 +181,15 @@ public class DevicePage extends BasePage {
      * @return FailMessage
      */
     public String getAddDeviceFailMessage() {
-        return addNVRDevicePage.getAddDeviceMessage();
+        logger.info("获取错误添加设备的提示框Message");
+        String addDeviceMessage = null;
+        try {
+            addDeviceMessage = addNVRDevicePage.getAddDeviceMessage();
+        } catch (Exception e) {
+            logger.error("获取错误添加设备的提示框Message失败");
+            e.printStackTrace();
+        }
+        return addDeviceMessage;
     }
 
     /**
@@ -173,6 +200,8 @@ public class DevicePage extends BasePage {
      */
     public DevicePage deleteDevice(String deviceId) {
         try {
+            logger.info("删除"+deviceId+"设备");
+            swipeToTargetElement(deviceId);
             clickElement(By.xpath(
                     "//*[@text='" + deviceId + "']" +
                             "/following-sibling::" +
@@ -180,6 +209,7 @@ public class DevicePage extends BasePage {
             clickElement(deleteDeviceBtn);
             clickElement(deleteConfirmBtn);
         } catch (Exception e) {
+            logger.error("删除"+deviceId+"设备失败");
             backToIndex();
             e.printStackTrace();
         }
@@ -197,6 +227,7 @@ public class DevicePage extends BasePage {
             clickElement(searchBtn);
             sendKey(searchInput, deviceId);
         } catch (Exception e) {
+            logger.error("搜索"+deviceId+"设备失败");
             backToIndex();
             e.printStackTrace();
         }
@@ -210,6 +241,7 @@ public class DevicePage extends BasePage {
      * @return 搜索结果
      */
     public String searchAndGetResult(String deviceId) {
+        logger.info("搜索"+deviceId+"设备并获取搜索结果");
         searchDevice(deviceId);
         List elements = driver.findElements(By.xpath("//android.widget.TextView"));
         StringBuilder result = new StringBuilder();

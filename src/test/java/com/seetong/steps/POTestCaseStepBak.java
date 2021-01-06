@@ -1,12 +1,15 @@
-package com.seetong.testcase.testcase_object;
+package com.seetong.steps;
 
 import com.seetong.page.main.BasePage;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class POTestCase extends BaseTestCase {
+public class POTestCaseStepBak extends BaseTestCaseStep {
+
+
 
 
     public void run() {
@@ -42,7 +45,6 @@ public class POTestCase extends BaseTestCase {
                     assertFalse(BasePage.getInstance().getActResult().contains(value.get(1)));
                 }
             }
-
         });
     }
 

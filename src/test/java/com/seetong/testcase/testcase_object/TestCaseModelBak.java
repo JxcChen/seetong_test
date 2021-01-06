@@ -1,7 +1,7 @@
 package com.seetong.testcase.testcase_object;
 
 import com.seetong.steps.BaseTestCaseStep;
-import com.seetong.steps.POTestCaseStep;
+import com.seetong.steps.POTestCaseStepBak;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,15 +10,15 @@ import java.util.List;
 /**
  * 映射yaml文件的类
  */
-public class TestCaseModel {
-    public HashMap<String, POTestCaseStep> caseModel;
+public class TestCaseModelBak {
+    public HashMap<String, POTestCaseStepBak> caseModel;
 
     /**
      * 获取测试数据
      * @param model 对应yaml中的数据
      * @return 方法对应的测试步骤步骤
      */
-    public static List<BaseTestCaseStep> getTestData(TestCaseModel model) {
+    public static List<BaseTestCaseStep> getTestData(TestCaseModelBak model) {
         // 获取当前调用该方法的具体方法名
         String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
         // 进行初始化
@@ -40,6 +40,6 @@ public class TestCaseModel {
             return list;
         }
 
-        return model.caseModel.get(methodName).testcaseGenerate();
+        return model.caseModel.get(methodName).testcaseGenerateBak();
     }
 }

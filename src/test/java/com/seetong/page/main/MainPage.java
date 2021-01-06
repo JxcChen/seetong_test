@@ -4,8 +4,7 @@ import com.seetong.common.Constant;
 import com.seetong.page.device.DevicePage;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.AutomationName;
-import io.appium.java_client.remote.MobileCapabilityType;
+
 import io.qameta.allure.util.PropertiesUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -27,6 +26,7 @@ public class MainPage extends BasePage {
     public void initDriver() {
 
         try {
+            logger.info("初始化驱动");
             DesiredCapabilities capabilities = new DesiredCapabilities();
             Properties properties = new Properties();
             // 获取DesiredCapabilities信息
@@ -39,16 +39,19 @@ public class MainPage extends BasePage {
                 String strKey = key.toString();
                 capabilities.setCapability(strKey, properties.getProperty(strKey).toString());
             }
-            String platformName = properties.get("platformName").toString();
+            driver = new AndroidDriver(new URL(Constant.APPIUM_SERVER_URL), capabilities);
+            /*String platformName = properties.get("platformName").toString();
             // 初始化driver
             switch(platformName){
                 case "Android":
+                    System.out.println("=============================");
                     driver = new AndroidDriver(new URL(Constant.APPIUM_SERVER_URL), capabilities);
                 case "IOS":
                     driver = new IOSDriver(new URL(Constant.APPIUM_SERVER_URL), capabilities);
-            }
+            }*/
             driver.manage().timeouts().implicitlyWait(Constant.IMPLICITLY_WAIT_TIME, TimeUnit.SECONDS);
         } catch (Exception e) {
+            logger.error("初始化驱动失败");
             e.printStackTrace();
         }
     }
@@ -66,7 +69,8 @@ public class MainPage extends BasePage {
     /**
      * 结束退出驱动
      */
-    public void quit() {
+    public void tearDown() {
+        logger.info("测试结果退出驱动");
         driver.quit();
     }
 
