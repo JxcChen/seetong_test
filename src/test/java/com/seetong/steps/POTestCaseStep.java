@@ -16,7 +16,7 @@ public class POTestCaseStep extends BaseTestCaseStep {
 
 
     private ArrayList<Executable> assertList = new ArrayList<>();
-    
+
     public void run() {
         steps.forEach(step -> {
             // 获取到每个key 用作判断依据
@@ -42,27 +42,27 @@ public class POTestCaseStep extends BaseTestCaseStep {
                 int i = (int) step.get("assert");
                 String matcher = asserts.get(i).getMatcher();
                 String reason = asserts.get(i).getReason();
-                String runExpected = PlaceholderUtils.resolveString(asserts.get(i).getExpected(),assertExpected.get(index));
+                String runExpected = PlaceholderUtils.resolveString(asserts.get(i).getExpected(), assertExpected.get(index));
                 String actResult = BasePage.getInstance().getActResult();
                 if (matcher.equals("equalTo")) {
-                    assertList.add(() ->{
-                        assertThat(reason, actResult,equalTo(runExpected));
+                    assertList.add(() -> {
+                        assertThat(reason, actResult, equalTo(runExpected));
                     });
                 }
                 if (matcher.equals("containsString")) {
-                    assertList.add(() ->{
-                        assertThat(reason,actResult,containsString(runExpected));
+                    assertList.add(() -> {
+                        assertThat(reason, actResult, containsString(runExpected));
                     });
                 }
-                if (matcher.equals("not_containsString")){
-                    assertList.add(() ->{
-                        assertThat(reason,actResult,not(containsString(runExpected)));
+                if (matcher.equals("not_containsString")) {
+                    assertList.add(() -> {
+                        assertThat(reason, actResult, not(containsString(runExpected)));
                     });
                 }
 
             }
         });
-        assertAll("全局断言",assertList.stream());
+        assertAll("全局断言", assertList.stream());
     }
 
 }

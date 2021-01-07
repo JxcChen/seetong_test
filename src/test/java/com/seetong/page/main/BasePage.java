@@ -75,10 +75,10 @@ public class BasePage {
     public BasePage getPage(String objectName) {
         BasePage basePage = null;
         try {
-            logger.info("获取"+objectName+"页面");
+            logger.info("获取" + objectName + "页面");
             basePage = pages.get(objectName);
         } catch (Exception e) {
-            logger.error("获取"+objectName+"页面失败");
+            logger.error("获取" + objectName + "页面失败");
             e.printStackTrace();
         }
         return basePage;
@@ -102,7 +102,7 @@ public class BasePage {
      */
     public void runStep(String methodName, String objectName, ArrayList<String> params) {
         try {
-            logger.info("执行"+objectName+"的"+methodName+"方法");
+            logger.info("执行" + objectName + "的" + methodName + "方法");
             Method runMethod = Arrays.stream(this.getClass().getMethods()).filter(method -> method.getName().equals(methodName)).findFirst().get();
             Object result = runMethod.invoke(this, params.toArray());
             // 判断返回值是页面还是字符串 是页面则存入pages 是字符串则存入actResults
@@ -116,7 +116,7 @@ public class BasePage {
                 actResult = result.toString();
             }
         } catch (Exception e) {
-            logger.error("执行"+objectName+"的"+methodName+"方法失败");
+            logger.error("执行" + objectName + "的" + methodName + "方法失败");
             e.printStackTrace();
         }
 
@@ -131,11 +131,11 @@ public class BasePage {
      */
     public WebElement waitElementVisible(By locator) {
         try {
-            logger.info("等待"+locator+"元素可见");
+            logger.info("等待" + locator + "元素可见");
             WebDriverWait wait = new WebDriverWait(driver, Constant.WAIT_TIME);
             return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (Exception e) {
-            logger.error("定位"+locator+"元素超时");
+            logger.error("定位" + locator + "元素超时");
             e.printStackTrace();
         }
         return null;
@@ -149,11 +149,11 @@ public class BasePage {
      */
     public WebElement waitElementClickable(By locator) {
         try {
-            logger.info("等待"+locator+"元素可可被点击");
+            logger.info("等待" + locator + "元素可可被点击");
             WebDriverWait wait = new WebDriverWait(driver, Constant.WAIT_TIME);
             return wait.until(ExpectedConditions.elementToBeClickable(locator));
         } catch (Exception e) {
-            logger.error("定位"+locator+"元素超时");
+            logger.error("定位" + locator + "元素超时");
             e.printStackTrace();
         }
         return null;
@@ -165,7 +165,7 @@ public class BasePage {
      * @param locator 目标元素定位器
      */
     public void clickElement(By locator) {
-        logger.info("点击"+locator+"元素");
+        logger.info("点击" + locator + "元素");
         waitElementClickable(locator).click();
     }
 
@@ -176,14 +176,14 @@ public class BasePage {
      * @param key     输入的内容
      */
     public void sendKey(By locator, String key) {
-        logger.info("对"+locator+"元素输入："+key);
+        logger.info("对" + locator + "元素输入：" + key);
         WebElement webElement = waitElementVisible(locator);
         webElement.sendKeys(key);
     }
 
 
     public String getElementText(By locator) {
-        logger.info("获取"+locator+"文本信息");
+        logger.info("获取" + locator + "文本信息");
         return waitElementVisible(locator).getText();
     }
 
@@ -284,8 +284,8 @@ public class BasePage {
      * @param TextSelector 文本定位符
      */
     public void swipeToTargetElement(String TextSelector) {
-        logger.info("滑动到"+TextSelector+"元素位置");
-        ((AndroidDriver)driver).findElementByAndroidUIAutomator(
+        logger.info("滑动到" + TextSelector + "元素位置");
+        ((AndroidDriver) driver).findElementByAndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true).instance(0))" +
                         ".scrollIntoView(new UiSelector().textMatches(\"" + TextSelector + "\").instance(0))")
                 .click();

@@ -26,17 +26,15 @@ import java.util.List;
 public class DeviceTest {
 
     Logger logger = LoggerFactory.getLogger(DeviceTest.class);
-    static ObjectMapper mapper;
     static TestCaseModel model;
+
     @BeforeAll
     public static void init() {
         try {
             // todo: 获取yaml数据并进行初始化
-            mapper = new ObjectMapper(new YAMLFactory()) {
-            };
-            model = mapper.readValue(DeviceTestBak.class.getResourceAsStream("/testcase/device_test_data.yaml"), TestCaseModel.class);
+            model = TestCaseModel.load("/testcase/device_test_data.yaml");
             // 进行初始化
-            TestCaseModel.getTestData(model).get(0).run();
+            model.getTestData().get(0).run();
             // 清空所有设备
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,7 +44,7 @@ public class DeviceTest {
 
     @BeforeEach
     public void backToTestPage() {
-        TestCaseModel.getTestData(model).get(0).run();
+        model.getTestData().get(0).run();
     }
 
     @DisplayName("正常添加设备")
@@ -111,27 +109,27 @@ public class DeviceTest {
 
 
     public static List<BaseTestCaseStep> addDeviceSuccessTest() {
-        return TestCaseModel.getTestData(model);
+        return model.getTestData();
     }
 
-   public static List<BaseTestCaseStep> addDeviceFailWithToastTipsTest() {
-        return TestCaseModel.getTestData(model);
+    public static List<BaseTestCaseStep> addDeviceFailWithToastTipsTest() {
+        return model.getTestData();
     }
 
     public static List<BaseTestCaseStep> addDeviceFailWithMessageTest() {
-        return TestCaseModel.getTestData(model);
+        return model.getTestData();
     }
 
     public static List<BaseTestCaseStep> addDeviceThroughLanSuccessTest() {
-        return TestCaseModel.getTestData(model);
+        return model.getTestData();
     }
 
     public static List<BaseTestCaseStep> deleteDeviceTest() {
-        return TestCaseModel.getTestData(model);
+        return model.getTestData();
     }
 
     public static List<BaseTestCaseStep> searchDeviceTest() {
-        return TestCaseModel.getTestData(model);
+        return model.getTestData();
     }
 
 }

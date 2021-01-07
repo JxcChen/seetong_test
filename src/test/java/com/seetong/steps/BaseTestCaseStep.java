@@ -13,9 +13,9 @@ public class BaseTestCaseStep {
     public int index = 0;
 
 
-
     /**
      * 将数据根据参数个数进行裂变
+     *
      * @return 裂变后的 case集合
      */
     public List<BaseTestCaseStep> testcaseGenerateBak() {
@@ -33,6 +33,7 @@ public class BaseTestCaseStep {
 
     /**
      * 将数据根据参数个数进行裂变
+     *
      * @return 裂变后的 case集合
      */
     public List<BaseTestCaseStep> testcaseGenerate() {
@@ -52,7 +53,8 @@ public class BaseTestCaseStep {
 
     /**
      * 将yaml里的数据进行参数化替换
-     * @param step 执行的步骤
+     *
+     * @param step       执行的步骤
      * @param methodName 需要进行参数化的方法名
      * @return 进行参数化替换后的数据
      */
@@ -83,7 +85,6 @@ public class BaseTestCaseStep {
         }
         return value;
     }
-
     public void run() {
     }
 
