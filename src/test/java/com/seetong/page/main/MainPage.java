@@ -40,15 +40,7 @@ public class MainPage extends BasePage {
                 capabilities.setCapability(strKey, properties.getProperty(strKey).toString());
             }
             driver = new AndroidDriver(new URL(Constant.APPIUM_SERVER_URL), capabilities);
-            /*String platformName = properties.get("platformName").toString();
-            // 初始化driver
-            switch(platformName){
-                case "Android":
-                    System.out.println("=============================");
-                    driver = new AndroidDriver(new URL(Constant.APPIUM_SERVER_URL), capabilities);
-                case "IOS":
-                    driver = new IOSDriver(new URL(Constant.APPIUM_SERVER_URL), capabilities);
-            }*/
+
             driver.manage().timeouts().implicitlyWait(Constant.IMPLICITLY_WAIT_TIME, TimeUnit.SECONDS);
         } catch (Exception e) {
             logger.error("初始化驱动失败");
